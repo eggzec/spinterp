@@ -1,5 +1,5 @@
 project(
-    '<Project Name>',
+    'spinterp',
     'fortran', 'c',
     version: run_command(['python', 'bin/get_version.py'], check: true).stdout().strip()
 )

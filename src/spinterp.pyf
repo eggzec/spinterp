@@ -1,0 +1,745 @@
+python module spinterp
+  interface
+
+    ! ------------------------------------------------------------------
+    ! SPNLEVELS - number of multi-indices summing to N in D dims
+    ! ------------------------------------------------------------------
+    subroutine spnlevels(n, d, nlevels)
+      integer intent(in) :: n
+      integer intent(in) :: d
+      integer intent(out) :: nlevels
+    end subroutine spnlevels
+
+    ! ------------------------------------------------------------------
+    ! SPGETSEQ - enumerate multi-index level sequences
+    ! ------------------------------------------------------------------
+    subroutine spgetseq(n, d, nlevels, seq)
+      integer intent(in) :: n
+      integer intent(in) :: d
+      integer intent(in) :: nlevels
+      integer intent(out), dimension(nlevels, d) :: seq
+    end subroutine spgetseq
+
+    ! ------------------------------------------------------------------
+    ! SPDIM_CC - total grid points, CC / Chebyshev sparse grid
+    ! ------------------------------------------------------------------
+    subroutine spdim_cc(levelseq, nlevels, d, totalpoints)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      integer intent(out) :: totalpoints
+    end subroutine spdim_cc
+
+    ! ------------------------------------------------------------------
+    ! SPDIM_M - total grid points, Maximum / NoBoundary sparse grid
+    ! ------------------------------------------------------------------
+    subroutine spdim_m(levelseq, nlevels, d, totalpoints, boundary)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in) :: boundary
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      integer intent(out) :: totalpoints
+    end subroutine spdim_m
+
+    ! ------------------------------------------------------------------
+    ! SPGRID_CC - Clenshaw-Curtis sparse grid coordinates
+    ! ------------------------------------------------------------------
+    subroutine spgrid_cc(levelseq, nlevels, d, x, totalpoints)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in) :: totalpoints
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(totalpoints, d) :: x
+    end subroutine spgrid_cc
+
+    ! ------------------------------------------------------------------
+    ! SPGRID_M - Maximum-norm sparse grid coordinates
+    ! ------------------------------------------------------------------
+    subroutine spgrid_m(levelseq, nlevels, d, x, totalpoints)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in) :: totalpoints
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(totalpoints, d) :: x
+    end subroutine spgrid_m
+
+    ! ------------------------------------------------------------------
+    ! SPGRID_NB - NoBoundary sparse grid coordinates
+    ! ------------------------------------------------------------------
+    subroutine spgrid_nb(levelseq, nlevels, d, x, totalpoints)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in) :: totalpoints
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(totalpoints, d) :: x
+    end subroutine spgrid_nb
+
+    ! ------------------------------------------------------------------
+    ! SPGRID_CB - Chebyshev sparse grid coordinates
+    ! ------------------------------------------------------------------
+    subroutine spgrid_cb(levelseq, nlevels, d, x, totalpoints)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in) :: totalpoints
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(totalpoints, d) :: x
+    end subroutine spgrid_cb
+
+    ! ------------------------------------------------------------------
+    ! SPGRID_GP - Gauss-Patterson sparse grid coordinates
+    ! ------------------------------------------------------------------
+    subroutine spgrid_gp(levelseq, nlevels, d, x, totalpoints)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in) :: totalpoints
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(totalpoints, d) :: x
+    end subroutine spgrid_gp
+
+    ! ------------------------------------------------------------------
+    ! SPINTERP_CC - evaluate CC sparse grid interpolant
+    ! ------------------------------------------------------------------
+    subroutine spinterp_cc(d, z, nz, y, ninterp, levelseq, nlevels, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ninterp
+      integer intent(in) :: nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ninterp) :: ip
+    end subroutine spinterp_cc
+
+    ! ------------------------------------------------------------------
+    ! SPINTERP_M - evaluate Maximum-norm sparse grid interpolant
+    ! ------------------------------------------------------------------
+    subroutine spinterp_m(d, z, nz, y, ninterp, levelseq, nlevels, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ninterp
+      integer intent(in) :: nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ninterp) :: ip
+    end subroutine spinterp_m
+
+    ! ------------------------------------------------------------------
+    ! SPINTERP_NB - evaluate NoBoundary sparse grid interpolant
+    ! ------------------------------------------------------------------
+    subroutine spinterp_nb(d, z, nz, y, ninterp, levelseq, nlevels, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ninterp
+      integer intent(in) :: nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ninterp) :: ip
+    end subroutine spinterp_nb
+
+    ! ------------------------------------------------------------------
+    ! SPINTERP_CB - evaluate Chebyshev sparse grid interpolant
+    ! ------------------------------------------------------------------
+    subroutine spinterp_cb(d, z, nz, y, ninterp, levelseq, nlevels, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ninterp
+      integer intent(in) :: nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ninterp) :: ip
+    end subroutine spinterp_cb
+
+    ! ------------------------------------------------------------------
+    ! SPINTERP_GP - evaluate Gauss-Patterson sparse grid interpolant
+    ! ------------------------------------------------------------------
+    subroutine spinterp_gp(d, z, nz, y, ninterp, levelseq, nlevels, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ninterp
+      integer intent(in) :: nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ninterp) :: ip
+    end subroutine spinterp_gp
+
+    ! ------------------------------------------------------------------
+    ! SPCMPVALS_CC - compute hierarchical surplus increments, CC
+    ! ------------------------------------------------------------------
+    subroutine spcmpvals_cc(d, z, nz, y, ny, newlevelseq, nnewlevels, levelseq, nlevels, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ny
+      integer intent(in) :: nnewlevels
+      integer intent(in) :: nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ny, d) :: y
+      integer intent(in), dimension(nnewlevels, d) :: newlevelseq
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ny) :: ip
+    end subroutine spcmpvals_cc
+
+    ! ------------------------------------------------------------------
+    ! SPCMPVALS_M - compute hierarchical surplus increments, Maximum
+    ! ------------------------------------------------------------------
+    subroutine spcmpvals_m(d, z, nz, y, ny, newlevelseq, nnewlevels, levelseq, nlevels, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ny
+      integer intent(in) :: nnewlevels
+      integer intent(in) :: nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ny, d) :: y
+      integer intent(in), dimension(nnewlevels, d) :: newlevelseq
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ny) :: ip
+    end subroutine spcmpvals_m
+
+    ! ------------------------------------------------------------------
+    ! SPCMPVALS_NB - compute hierarchical surplus increments, NoBoundary
+    ! ------------------------------------------------------------------
+    subroutine spcmpvals_nb(d, z, nz, y, ny, newlevelseq, nnewlevels, levelseq, nlevels, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ny
+      integer intent(in) :: nnewlevels
+      integer intent(in) :: nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ny, d) :: y
+      integer intent(in), dimension(nnewlevels, d) :: newlevelseq
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ny) :: ip
+    end subroutine spcmpvals_nb
+
+    ! ------------------------------------------------------------------
+    ! SPCMPVALS_CB - compute hierarchical surplus increments, Chebyshev
+    ! ------------------------------------------------------------------
+    subroutine spcmpvals_cb(d, z, nz, y, ny, newlevelseq, nnewlevels, levelseq, nlevels, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ny
+      integer intent(in) :: nnewlevels
+      integer intent(in) :: nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ny, d) :: y
+      integer intent(in), dimension(nnewlevels, d) :: newlevelseq
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ny) :: ip
+    end subroutine spcmpvals_cb
+
+    ! ------------------------------------------------------------------
+    ! SPCMPVALS_GP - compute hierarchical surplus increments, GP
+    ! ------------------------------------------------------------------
+    subroutine spcmpvals_gp(d, z, nz, y, ny, newlevelseq, nnewlevels, levelseq, nlevels, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ny
+      integer intent(in) :: nnewlevels
+      integer intent(in) :: nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ny, d) :: y
+      integer intent(in), dimension(nnewlevels, d) :: newlevelseq
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ny) :: ip
+    end subroutine spcmpvals_gp
+
+    ! ------------------------------------------------------------------
+    ! SPDERIV_CC - CC interpolant values and gradient
+    ! ------------------------------------------------------------------
+    subroutine spderiv_cc(d, z, nz, y, ninterp, levelseq, nlevels, ip, ipder)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ninterp
+      integer intent(in) :: nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ninterp) :: ip
+      double precision intent(out), dimension(ninterp, d) :: ipder
+    end subroutine spderiv_cc
+
+    ! ------------------------------------------------------------------
+    ! SPQUADW_CC - quadrature weights, CC / Chebyshev
+    ! ------------------------------------------------------------------
+    subroutine spquadw_cc(levelseq, nlevels, d, w, nw)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in) :: nw
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(nw) :: w
+    end subroutine spquadw_cc
+
+    ! ------------------------------------------------------------------
+    ! SPQUADW_M - quadrature weights, Maximum
+    ! ------------------------------------------------------------------
+    subroutine spquadw_m(levelseq, nlevels, d, w, nw)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in) :: nw
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(nw) :: w
+    end subroutine spquadw_m
+
+    ! ------------------------------------------------------------------
+    ! SPQUADW_NB - quadrature weights, NoBoundary
+    ! ------------------------------------------------------------------
+    subroutine spquadw_nb(levelseq, nlevels, d, w, nw)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in) :: nw
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(nw) :: w
+    end subroutine spquadw_nb
+
+    ! ------------------------------------------------------------------
+    ! SPQUADW_CB - quadrature weights, Chebyshev (needs 1-D table)
+    ! ------------------------------------------------------------------
+    subroutine spquadw_cb(levelseq, nlevels, d, w, nw, w1d, nw1d, startid)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in) :: nw
+      integer intent(in) :: nw1d
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(nw) :: w
+      double precision intent(in), dimension(nw1d) :: w1d
+      integer intent(in), dimension(*) :: startid
+    end subroutine spquadw_cb
+
+    ! ------------------------------------------------------------------
+    ! SPQUADW_GP - quadrature weights, Gauss-Patterson (needs 1-D table)
+    ! ------------------------------------------------------------------
+    subroutine spquadw_gp(levelseq, nlevels, d, w, nw, w1d, nw1d, startid)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in) :: nw
+      integer intent(in) :: nw1d
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(nw) :: w
+      double precision intent(in), dimension(nw1d) :: w1d
+      integer intent(in), dimension(*) :: startid
+    end subroutine spquadw_gp
+
+    ! ------------------------------------------------------------------
+    ! GP_WEIGHTS - 1-D GP quadrature weight table
+    ! ------------------------------------------------------------------
+    subroutine gp_weights(maxlev, weights, nw, startid)
+      integer intent(in) :: maxlev
+      integer intent(in) :: nw
+      double precision intent(out), dimension(nw) :: weights
+      integer intent(out), dimension(maxlev+1) :: startid
+    end subroutine gp_weights
+
+    ! ------------------------------------------------------------------
+    ! CHEB_WEIGHTS - 1-D Chebyshev quadrature weight table
+    ! ------------------------------------------------------------------
+    subroutine cheb_weights(maxlev, weights, nw, startid)
+      integer intent(in) :: maxlev
+      integer intent(in) :: nw
+      double precision intent(out), dimension(nw) :: weights
+      integer intent(out), dimension(maxlev+1) :: startid
+    end subroutine cheb_weights
+
+    ! ------------------------------------------------------------------
+    ! GP_ABSC - Gauss-Patterson abscissae
+    ! ------------------------------------------------------------------
+    subroutine gp_absc(level, x, nx)
+      integer intent(in) :: level
+      integer intent(in) :: nx
+      double precision intent(out), dimension(nx) :: x
+    end subroutine gp_absc
+
+    ! ------------------------------------------------------------------
+    ! GP_BARY_W - Gauss-Patterson barycentric weights
+    ! ------------------------------------------------------------------
+    subroutine gp_bary_w(level, w, nw)
+      integer intent(in) :: level
+      integer intent(in) :: nw
+      double precision intent(out), dimension(nw) :: w
+    end subroutine gp_bary_w
+
+    ! ------------------------------------------------------------------
+    ! SPGET_NPOINTS_CC - point counts per subgrid, CC/Chebyshev
+    ! ------------------------------------------------------------------
+    subroutine spget_npoints_cc(levelseq, nlevels, d, totalpoints, npoints)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      integer intent(out) :: totalpoints
+      integer intent(out), dimension(nlevels) :: npoints
+    end subroutine spget_npoints_cc
+
+    ! ------------------------------------------------------------------
+    ! SPGET_NPOINTS_M - point counts per subgrid, Maximum
+    ! ------------------------------------------------------------------
+    subroutine spget_npoints_m(levelseq, nlevels, d, totalpoints, npoints)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      integer intent(out) :: totalpoints
+      integer intent(out), dimension(nlevels) :: npoints
+    end subroutine spget_npoints_m
+
+    ! ------------------------------------------------------------------
+    ! SPGET_NPOINTS_NB - point counts per subgrid, NoBoundary
+    ! ------------------------------------------------------------------
+    subroutine spget_npoints_nb(levelseq, nlevels, d, totalpoints, npoints)
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      integer intent(out) :: totalpoints
+      integer intent(out), dimension(nlevels) :: npoints
+    end subroutine spget_npoints_nb
+
+    ! ------------------------------------------------------------------
+    ! SPSEQ2FULL - expand sparse index structure to full levelseq
+    ! ------------------------------------------------------------------
+    subroutine spseq2full(indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, d, fullseq)
+      integer intent(in) :: nsubgrids
+      integer intent(in) :: naddr
+      integer intent(in) :: d
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(out), dimension(nsubgrids, d) :: fullseq
+    end subroutine spseq2full
+
+    ! ------------------------------------------------------------------
+    ! REORDER_VALS - reorder surplus array (sort dims by level desc)
+    ! ------------------------------------------------------------------
+    subroutine reorder_vals(z, nz, levelseq, nlevels, d)
+      integer intent(in) :: nz
+      integer intent(in) :: nlevels
+      integer intent(in) :: d
+      double precision intent(inout), dimension(nz) :: z
+      integer intent(in), dimension(nlevels, d) :: levelseq
+    end subroutine reorder_vals
+
+    ! ------------------------------------------------------------------
+    ! SPINTERP_CC_SP - CC interpolation, sparse index structure
+    ! ------------------------------------------------------------------
+    subroutine spinterp_cc_sp(d, z, nz, y, ninterp, indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, subgridpoints, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ninterp
+      integer intent(in) :: nsubgrids
+      integer intent(in) :: naddr
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      double precision intent(out), dimension(ninterp) :: ip
+    end subroutine spinterp_cc_sp
+
+    ! ------------------------------------------------------------------
+    ! SPINTERP_CB_SP - Chebyshev interpolation, sparse index structure
+    ! ------------------------------------------------------------------
+    subroutine spinterp_cb_sp(d, z, nz, y, ninterp, indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, subgridpoints, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ninterp
+      integer intent(in) :: nsubgrids
+      integer intent(in) :: naddr
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      double precision intent(out), dimension(ninterp) :: ip
+    end subroutine spinterp_cb_sp
+
+    ! ------------------------------------------------------------------
+    ! SPINTERP_GP_SP - GP interpolation, sparse index structure
+    ! ------------------------------------------------------------------
+    subroutine spinterp_gp_sp(d, z, nz, y, ninterp, indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, subgridpoints, ip)
+      integer intent(in) :: d
+      integer intent(in) :: nz
+      integer intent(in) :: ninterp
+      integer intent(in) :: nsubgrids
+      integer intent(in) :: naddr
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      double precision intent(out), dimension(ninterp) :: ip
+    end subroutine spinterp_gp_sp
+
+    ! ------------------------------------------------------------------
+    ! SPGRID_CC_SP - CC grid points, sparse index structure
+    ! ------------------------------------------------------------------
+    subroutine spgrid_cc_sp(indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, subgridpoints, d, x, totalpoints, fromindex, toindex)
+      integer intent(in) :: nsubgrids
+      integer intent(in) :: naddr
+      integer intent(in) :: d
+      integer intent(in) :: totalpoints
+      integer intent(in) :: fromindex
+      integer intent(in) :: toindex
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      double precision intent(out), dimension(totalpoints, d) :: x
+    end subroutine spgrid_cc_sp
+
+    ! ------------------------------------------------------------------
+    ! SPGRID_CB_SP - Chebyshev grid points, sparse index structure
+    ! ------------------------------------------------------------------
+    subroutine spgrid_cb_sp(indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, subgridpoints, d, x, totalpoints, fromindex, toindex)
+      integer intent(in) :: nsubgrids
+      integer intent(in) :: naddr
+      integer intent(in) :: d
+      integer intent(in) :: totalpoints
+      integer intent(in) :: fromindex
+      integer intent(in) :: toindex
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      double precision intent(out), dimension(totalpoints, d) :: x
+    end subroutine spgrid_cb_sp
+
+    ! ------------------------------------------------------------------
+    ! SPGRID_GP_SP - GP grid points, sparse index structure
+    ! ------------------------------------------------------------------
+    subroutine spgrid_gp_sp(indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, subgridpoints, d, x, totalpoints, fromindex, toindex)
+      integer intent(in) :: nsubgrids
+      integer intent(in) :: naddr
+      integer intent(in) :: d
+      integer intent(in) :: totalpoints
+      integer intent(in) :: fromindex
+      integer intent(in) :: toindex
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      double precision intent(out), dimension(totalpoints, d) :: x
+    end subroutine spgrid_gp_sp
+
+    ! ------------------------------------------------------------------
+    ! SPCMPVALS_CC_SP - CC surpluses, sparse index structure
+    ! ------------------------------------------------------------------
+    subroutine spcmpvals_cc_sp(d, z, nz, y, ny, indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, backwardneighbors, forwardneighbors, nfwd, subgridpoints, subgridaddr, fromindex, toindex, ip)
+      integer intent(in) :: d, nz, ny, nsubgrids, naddr, nfwd
+      integer intent(in) :: fromindex, toindex
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ny, d) :: y
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(naddr) :: backwardneighbors
+      integer intent(in), dimension(nfwd) :: forwardneighbors
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      integer intent(in), dimension(nsubgrids) :: subgridaddr
+      double precision intent(out), dimension(ny) :: ip
+    end subroutine spcmpvals_cc_sp
+
+    ! ------------------------------------------------------------------
+    ! SPCMPVALS_CBGP_SP - CB/GP surpluses, sparse index structure
+    ! ------------------------------------------------------------------
+    subroutine spcmpvals_cbgp_sp(d, z, nz, y, ny, indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, backwardneighbors, forwardneighbors, nfwd, subgridpoints, subgridaddr, fromindex, toindex, isgp, ip)
+      integer intent(in) :: d, nz, ny, nsubgrids, naddr, nfwd, isgp
+      integer intent(in) :: fromindex, toindex
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ny, d) :: y
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(naddr) :: backwardneighbors
+      integer intent(in), dimension(nfwd) :: forwardneighbors
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      integer intent(in), dimension(nsubgrids) :: subgridaddr
+      double precision intent(out), dimension(ny) :: ip
+    end subroutine spcmpvals_cbgp_sp
+
+    ! ------------------------------------------------------------------
+    ! SPQUADW_CC_SP - CC quadrature weights, sparse indices
+    ! ------------------------------------------------------------------
+    subroutine spquadw_cc_sp(indicesndiims, nsubgrids, indiceslevs, indicesaddr, naddr, subgridpoints, w, nw)
+      integer intent(in) :: nsubgrids, naddr, nw
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      double precision intent(out), dimension(nw) :: w
+    end subroutine spquadw_cc_sp
+
+    ! ------------------------------------------------------------------
+    ! SPQUADW_CB_SP - CB quadrature weights, sparse indices
+    ! ------------------------------------------------------------------
+    subroutine spquadw_cb_sp(indicesndiims, nsubgrids, indiceslevs, indicesaddr, naddr, subgridpoints, w, nw, w1d, nw1d, startid)
+      integer intent(in) :: nsubgrids, naddr, nw, nw1d
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      double precision intent(out), dimension(nw) :: w
+      double precision intent(in), dimension(nw1d) :: w1d
+      integer intent(in), dimension(*) :: startid
+    end subroutine spquadw_cb_sp
+
+    ! ------------------------------------------------------------------
+    ! SPQUADW_GP_SP - GP quadrature weights, sparse indices
+    ! ------------------------------------------------------------------
+    subroutine spquadw_gp_sp(indicesndiims, nsubgrids, indiceslevs, indicesaddr, naddr, subgridpoints, w, nw, w1d, nw1d, startid)
+      integer intent(in) :: nsubgrids, naddr, nw, nw1d
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      double precision intent(out), dimension(nw) :: w
+      double precision intent(in), dimension(nw1d) :: w1d
+      integer intent(in), dimension(*) :: startid
+    end subroutine spquadw_gp_sp
+
+    ! ------------------------------------------------------------------
+    ! SPDERIV_CC_SP - CC gradient, sparse index structure
+    ! ------------------------------------------------------------------
+    subroutine spderiv_cc_sp(d, z, nz, y, ninterp, indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, subgridpoints, ip, ipder)
+      integer intent(in) :: d, nz, ninterp, nsubgrids, naddr
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      double precision intent(out), dimension(ninterp) :: ip
+      double precision intent(out), dimension(ninterp, d) :: ipder
+    end subroutine spderiv_cc_sp
+
+    ! ------------------------------------------------------------------
+    ! SPCONT_DERIV_CC - continuous derivatives, CC full levelseq
+    ! ------------------------------------------------------------------
+    subroutine spcont_deriv_cc(d, z, nz, y, ninterp, levelseq, nlevels, maxlev, ip, ipder, ipder2)
+      integer intent(in) :: d, nz, ninterp, nlevels, maxlev
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ninterp) :: ip
+      double precision intent(out), dimension(ninterp, d) :: ipder
+      double precision intent(out), dimension(ninterp, d) :: ipder2
+    end subroutine spcont_deriv_cc
+
+    ! ------------------------------------------------------------------
+    ! SPCONT_DERIV_CC_SP - continuous derivatives, CC sparse indices
+    ! ------------------------------------------------------------------
+    subroutine spcont_deriv_cc_sp(d, z, nz, y, ninterp, indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, subgridpoints, maxlevvec, ip, ipder, ipder2)
+      integer intent(in) :: d, nz, ninterp, nsubgrids, naddr
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      integer intent(in), dimension(d) :: maxlevvec
+      double precision intent(out), dimension(ninterp) :: ip
+      double precision intent(out), dimension(ninterp, d) :: ipder
+      double precision intent(out), dimension(ninterp, d) :: ipder2
+    end subroutine spcont_deriv_cc_sp
+
+    ! ------------------------------------------------------------------
+    ! PP_DERIV - post-processing for continuous derivatives
+    ! ------------------------------------------------------------------
+    subroutine pp_deriv(ipder, ipder2, ninterp, d, maxlevvec, y)
+      integer intent(in) :: ninterp, d
+      integer intent(in), dimension(d) :: maxlevvec
+      double precision intent(inout), dimension(ninterp, d) :: ipder
+      double precision intent(in), dimension(ninterp, d) :: ipder2
+      double precision intent(in), dimension(ninterp, d) :: y
+    end subroutine pp_deriv
+
+    ! ------------------------------------------------------------------
+    ! SPDERIV_CB - Chebyshev gradient, full levelseq
+    ! ------------------------------------------------------------------
+    subroutine spderiv_cb(d, z, nz, y, ninterp, levelseq, nlevels, ip, ipder)
+      integer intent(in) :: d, nz, ninterp, nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ninterp) :: ip
+      double precision intent(out), dimension(ninterp, d) :: ipder
+    end subroutine spderiv_cb
+
+    ! ------------------------------------------------------------------
+    ! SPDERIV_CB_SP - Chebyshev gradient, sparse indices
+    ! ------------------------------------------------------------------
+    subroutine spderiv_cb_sp(d, z, nz, y, ninterp, indicesndiims, nsubgrids, indicesdims, indiceslevs, indicesaddr, naddr, subgridpoints, ip, ipder)
+      integer intent(in) :: d, nz, ninterp, nsubgrids, naddr
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ninterp, d) :: y
+      integer intent(in), dimension(nsubgrids) :: indicesndiims
+      integer intent(in), dimension(naddr) :: indicesdims
+      integer intent(in), dimension(naddr) :: indiceslevs
+      integer intent(in), dimension(nsubgrids) :: indicesaddr
+      integer intent(in), dimension(nsubgrids) :: subgridpoints
+      double precision intent(out), dimension(ninterp) :: ip
+      double precision intent(out), dimension(ninterp, d) :: ipder
+    end subroutine spderiv_cb_sp
+
+    ! ------------------------------------------------------------------
+    ! SPCMPVALS_CB_DCT - CB surpluses via DCT, full levelseq
+    ! ------------------------------------------------------------------
+    subroutine spcmpvals_cb_dct(d, z, nz, y, ny, newlevelseq, nnewlevels, levelseq, nlevels, ip)
+      integer intent(in) :: d, nz, ny, nnewlevels, nlevels
+      double precision intent(in), dimension(nz) :: z
+      double precision intent(in), dimension(ny, d) :: y
+      integer intent(in), dimension(nnewlevels, d) :: newlevelseq
+      integer intent(in), dimension(nlevels, d) :: levelseq
+      double precision intent(out), dimension(ny) :: ip
+    end subroutine spcmpvals_cb_dct
+
+    ! ------------------------------------------------------------------
+    ! SORT_HEAP - max-heap sift-up
+    ! ------------------------------------------------------------------
+    subroutine sort_heap(a, na, g, ng)
+      integer intent(in) :: na, ng
+      integer intent(inout), dimension(na) :: a
+      double precision intent(in), dimension(ng) :: g
+    end subroutine sort_heap
+
+    ! ------------------------------------------------------------------
+    ! POP_HEAP - pop max from heap
+    ! ------------------------------------------------------------------
+    subroutine pop_heap(a, na, g, ng, index)
+      integer intent(in) :: na, ng
+      integer intent(inout), dimension(na) :: a
+      double precision intent(in), dimension(ng) :: g
+      integer intent(out) :: index
+    end subroutine pop_heap
+
+    ! ------------------------------------------------------------------
+    ! SPGETSEQ_SP - build sparse multi-index structure
+    ! ------------------------------------------------------------------
+    subroutine spgetseq_sp(n, d, gridcode, indicesndiims, indicesdims, indiceslevs, indicesaddr, backwardneighbors, forwardneighbors, subgridpoints, subgridaddr, activeindices, nsubgrids, maxaddr, currentindex)
+      integer intent(in) :: n, d, gridcode, nsubgrids, maxaddr
+      integer intent(out), dimension(nsubgrids) :: indicesndiims
+      integer intent(out), dimension(maxaddr) :: indicesdims
+      integer intent(out), dimension(maxaddr) :: indiceslevs
+      integer intent(out), dimension(nsubgrids) :: indicesaddr
+      integer intent(out), dimension(maxaddr) :: backwardneighbors
+      integer intent(out), dimension(nsubgrids*d) :: forwardneighbors
+      integer intent(out), dimension(nsubgrids) :: subgridpoints
+      integer intent(out), dimension(nsubgrids) :: subgridaddr
+      integer intent(out), dimension(nsubgrids) :: activeindices
+      integer intent(out) :: currentindex
+    end subroutine spgetseq_sp
+
+  end interface
+end python module spinterp

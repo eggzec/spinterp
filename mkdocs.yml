@@ -1,41 +1,38 @@
-site_name: <Project Name>
-site_description: <Project Description>
-site_url: https://eggzec.github.io/<Project Name>/
+site_name: spinterp
+site_description: Sparse Grid Interpolation Toolbox for Python
+site_url: https://eggzec.github.io/spinterp/
 docs_dir: docs
 site_dir: build/docs
 
-repo_name: eggzec/<Project Name>
-repo_url: https://github.com/eggzec/<Project Name>
+repo_name: eggzec/spinterp
+repo_url: https://github.com/eggzec/spinterp
 
-# Copyright
-copyright: Copyright &copy; 2026 <Project Name>
+copyright: "Copyright &copy; 2026 eggzec. All Rights Reserved."
 
-# Configuration
+# ---------------------------------------------------------------------------
+# Theme
+# ---------------------------------------------------------------------------
 theme:
   name: material
   language: en
 
   features:
-    # content features
-    - content.code.copy # https://squidfunk.github.io/mkdocs-material/reference/code-blocks/?h=code+copy#code-copy-button
-    - content.code.annotate # https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#code-annotations
-    # navigation features
-    - navigation.instant # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#instant-loading
-    - navigation.instant.progress # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#progress-indicator
-    - navigation.tracking # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#anchor-tracking
-    - navigation.tabs # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#navigation-tabs
-    - navigation.tabs.sticky # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#sticky-navigation-tabs
-    - navigation.sections # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#navigation-sections
-    - navigation.indexes # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#section-index-pages
-    - toc.follow # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#anchor-following
-    - navigation.top # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#back-to-top-button
-    - navigation.footer # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-footer
-    # search features
-    - search.suggest # https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/?h=search+highlight#search-suggestions
-    - search.highlight # https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/?h=search+highlight#search-highlighting
-    - search.share # https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/?h=search+highlight#search-sharing
+    - content.code.copy
+    - content.code.annotate
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.indexes
+    - toc.follow
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - search.share
 
-  # Palette configuration
   palette:
     - scheme: default
       primary: blue grey
@@ -50,93 +47,39 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
 
-  # Logo and favicon
-  favicon: assets/images/<Project Name>.ico
-  logo: assets/images/<Project Name>.png
-
-  # Font configuration
   font:
     text: Roboto
     code: Roboto Mono
 
-# Navigation structure
+# ---------------------------------------------------------------------------
+# Navigation
+# ---------------------------------------------------------------------------
 nav:
-  - Get Started:
-    - index.md
-    - Installation: installation.md
-    - Contributing: contributing.md
-    - License: license.md
-    - Credits: credits.md
-    - Contributors: contributors.md
-    - Users: users.md
+  - Home: index.md
+  - Installation: installation.md
+  - Quick Start: quickstart.md
   - Theory:
-    - Introduction:
-        - Overview: theory/introduction/index.md
-        - Experimental Design: theory/introduction/what-is-doe.md
-        - Uses of DOE: theory/introduction/doe-uses.md
-        - Steps of DOE: theory/introduction/doe-steps.md
-    - Assumptions:
-        - Overview: theory/assumptions/index.md
-        - Measurement System: theory/assumptions/measurement-system.md
-        - Process Stability: theory/assumptions/process-stability.md
-        - Simple Model: theory/assumptions/simple-model.md
-        - Residuals: theory/assumptions/residuals.md
-    - Choosing an Experimental Design:
-        - Overview: theory/choosing-design/index.md
-        - Set Objectives: theory/choosing-design/objectives.md
-        - Select Process Variables: theory/choosing-design/process-variables.md
-        - Select Experimental Design: theory/choosing-design/select-design.md
-        - Completely Randomized Designs: theory/choosing-design/completely-randomized.md
-        - Randomized Block Designs: theory/choosing-design/randomized-block.md
-        - Full Factorial Designs: theory/choosing-design/full-factorial.md
-        - Fractional Factorial Designs: theory/choosing-design/fractional-factorial.md
-        - Plackett-Burman Designs: theory/choosing-design/plackett-burman.md
-        - Response Surface Designs: theory/choosing-design/response-surface.md
-        - Central Composite Designs: theory/choosing-design/central-composite.md
-        - Box-Behnken Designs: theory/choosing-design/box-behnken.md
-        - Comparisons of Response Surface Designs: theory/choosing-design/design-comparisons.md
-        - Blocking a Response Surface Design: theory/choosing-design/blocking-rsd.md
-        - Adding Center Points: theory/choosing-design/center-points.md
-        - Improving Fractional Design Resolution: theory/choosing-design/improving-resolution.md
-        - Three-Level Full Factorial Designs: theory/choosing-design/three-level.md
-        - Three-Level, Mixed Level and Fractional Factorial Designs: theory/choosing-design/mixed-level.md
-    - Analysis of DOE Data:
-        - Overview: theory/analysis-doe/index.md
-        - DOE Analysis Steps: theory/analysis-doe/doe-analysis-steps.md
-        - Plotting DOE Data: theory/analysis-doe/plotting-doe-data.md
-        - Modeling DOE Data: theory/analysis-doe/modeling-doe-data.md
-        - Testing and Revising Models: theory/analysis-doe/testing-revising-models.md
-        - Interpreting DOE Results: theory/analysis-doe/interpreting-results.md
-        - Confirming DOE Results: theory/analysis-doe/confirming-results.md
-        - DOE Examples: theory/analysis-doe/doe-examples.md
-        - Full Factorial Example: theory/analysis-doe/full-factorial-example.md
-        - Fractional Factorial Example: theory/analysis-doe/fractional-factorial-example.md
-        - Response Surface Example: theory/analysis-doe/response-surface-example.md
-    - Advanced Topics:
-        - Overview: theory/advanced-topics/index.md
-        - When Classical Designs Don't Work: theory/advanced-topics/when-classical-fail.md
-        - Computer-Aided Designs: theory/advanced-topics/computer-aided-designs.md
-        - D-Optimal Designs: theory/advanced-topics/d-optimal.md
-        - Repairing a Design: theory/advanced-topics/repairing-design.md
-        - Optimizing a Process: theory/advanced-topics/optimizing-process.md
-        - Single Response Case: theory/advanced-topics/single-response.md
-        - Multiple Response Case: theory/advanced-topics/multiple-response.md
-  - Reference:
-    - Factorial Designs: reference/factorial.md
-    - Response Surface Designs: reference/response_surface.md
-    - Randomized Designs: reference/randomized.md
-    - Low-Discrepancy Sequences: reference/low_discrepancy_sequences.md
-    - Sampling Designs: reference/sampling_designs.md
-    - Taguchi Designs: reference/taguchi.md
-    - Optimal Designs: reference/doe_optimal.md
-    - Sparse Grid Designs: reference/sparse_grid.md
-  - Changelog: changelog.md
+    - Linear Basis Functions: theory/linear-basis.md
+    - Polynomial Basis Functions: theory/polynomial-basis.md
+    - Dimensional Adaptivity: theory/dimension-adaptive.md
+    - Bibliography: theory/bibliography.md
+  - API Reference:
+    - Overview: usage/index.md
+    - Computing Derivatives: usage/derivatives.md
+    - Numerical Integration: usage/integration.md
+    - Improving Performance: usage/performance.md
 
+# ---------------------------------------------------------------------------
+# Plugins
+# ---------------------------------------------------------------------------
 plugins:
-  - search: # https://squidfunk.github.io/mkdocs-material/plugins/search
-  - minify: # https://github.com/byrnereese/mkdocs-minify-plugin
+  - search:
+  - minify:
       minify_html: true
 
+# ---------------------------------------------------------------------------
+# Markdown extensions
+# ---------------------------------------------------------------------------
 markdown_extensions:
   - attr_list
   - md_in_html
@@ -158,22 +101,22 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
 
-extra_css:    # https://squidfunk.github.io/mkdocs-material/customization/#additional-css
+extra_css:
   - assets/stylesheets/extra.css
-  - https://unpkg.com/katex@0/dist/katex.min.css
 
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/eggzec/<Project Name>
+      link: https://github.com/eggzec/spinterp
     - icon: fontawesome/brands/python
-      link: https://pypi.org/project/<Project Name>/
+      link: https://pypi.org/project/spinterp/
 
 extra_javascript:
-  - assets/javascripts/katex.js
-  - https://unpkg.com/katex@0/dist/katex.min.js
-  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
 
+# ---------------------------------------------------------------------------
+# Validation
+# ---------------------------------------------------------------------------
 validation:
   nav:
     omitted_files: warn
