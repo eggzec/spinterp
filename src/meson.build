@@ -22,7 +22,7 @@ fortranobject_c = run_command(py,
   check: true
 ).stdout().strip()
 
-py_mod_name = '<Project Name>'
+py_mod_name = 'spinterp'
 
 fortran_sources = run_command(py, ['-c',
     'import glob; print(" ".join(glob.glob("*.f")))'
@@ -35,7 +35,7 @@ python_sources = run_command(py, ['-c',
 message('Python sources: ', python_sources)
 
 pyf_sources = [
-  '<Project Name>.pyf'
+  'spinterp.pyf'
 ]
 
 message('Fortran sources: ', fortran_sources + pyf_sources)

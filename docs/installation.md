@@ -1,10 +1,10 @@
 # Installation
 
-`<Project Name>` can be installed from PyPI or directly from source via GitHub.
+`spinterp` can be installed from PyPI or directly from source via GitHub.
 
 ---
 
-## [PyPI](https://pypi.org/project/<Project Name>)
+## [PyPI](https://pypi.org/project/spinterp)
 
 For using the PyPI package in your project, add it to your configuration file:
 
@@ -12,7 +12,7 @@ For using the PyPI package in your project, add it to your configuration file:
 
     ```toml
     [project.dependencies]
-    <Project Name> = "*" # (1)!
+    spinterp = "*" # (1)!
     ```
 
     1. Specifying a version is recommended
@@ -20,7 +20,7 @@ For using the PyPI package in your project, add it to your configuration file:
 === "requirements.txt"
 
     ```
-    <Project Name>>=0.1.0
+    spinterp>=0.1.0
     ```
 
 ### pip
@@ -28,7 +28,7 @@ For using the PyPI package in your project, add it to your configuration file:
 === "Installation for user"
 
     ```bash
-    pip install --upgrade --user <Project Name> # (1)!
+    pip install --upgrade --user spinterp # (1)!
     ```
 
     1. You may need to use `pip3` instead of `pip` depending on your Python installation.
@@ -38,7 +38,7 @@ For using the PyPI package in your project, add it to your configuration file:
     ```bash
     python -m venv .venv
     source .venv/bin/activate
-    pip install --require-virtualenv --upgrade <Project Name> # (1)!
+    pip install --require-virtualenv --upgrade spinterp # (1)!
     ```
 
     1. You may need to use `pip3` instead of `pip` depending on your Python installation.
@@ -52,7 +52,7 @@ For using the PyPI package in your project, add it to your configuration file:
 === "Adding to uv project"
 
     ```bash
-    uv add <Project Name>
+    uv add spinterp
     uv sync
     ```
 
@@ -60,41 +60,41 @@ For using the PyPI package in your project, add it to your configuration file:
 
     ```bash
     uv venv
-    uv pip install <Project Name>
+    uv pip install spinterp
     ```
 
 ### pipenv
 
 ```bash
-pipenv install <Project Name>
+pipenv install spinterp
 ```
 
 ### poetry
 
 ```bash
-poetry add <Project Name>
+poetry add spinterp
 ```
 
 ### pdm
 
 ```bash
-pdm add <Project Name>
+pdm add spinterp
 ```
 
 ### hatch
 
 ```bash
-hatch add <Project Name>
+hatch add spinterp
 ```
 
 ---
 
-## [GitHub](https://github.com/eggzec/<Project Name>)
+## [GitHub](https://github.com/eggzec/spinterp)
 
 Install the latest development version directly from the repository:
 
 ```bash
-pip install --upgrade "git+https://github.com/eggzec/<Project Name>.git#egg=<Project Name>"
+pip install --upgrade "git+https://github.com/eggzec/spinterp.git#egg=spinterp"
 ```
 
 ### Building locally
@@ -102,9 +102,9 @@ pip install --upgrade "git+https://github.com/eggzec/<Project Name>.git#egg=<Pro
 Clone and build from source if you want to modify or test local changes:
 
 ```bash
-git clone https://github.com/eggzec/<Project Name>.git
-cd <Project Name>
-pip install -e .
+git clone https://github.com/eggzec/spinterp.git
+cd spinterp
+python bin/build.py install
 ```
 
 ---

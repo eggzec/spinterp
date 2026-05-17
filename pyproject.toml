@@ -8,10 +8,11 @@ requires = [
 build-backend = "mesonpy"
 
 [project]
-name = "<Project Name>"
+name = "spinterp"
 dynamic = ["version"]
-description = "<Project Description>"
+description = "Sparse Grid Interpolation Toolbox for Python"
 authors = [
+    { name = "W. Andreas Klimke", email = "klimkeas@ians.uni-stuttgart.de" },
     { name = "Saud Zahir", email = "m.saud.zahir@gmail.com" },
 ]
 maintainers = [
@@ -19,9 +20,20 @@ maintainers = [
     { name = "M Laraib Ali", email = "laraibg786@outlook.com" }
 ]
 readme = "README.md"
-license = "GPL-3.0"
+license = {text = "GPL-3.0"}
 keywords = [
-    "python"
+    "sparse grid",
+    "interpolation",
+    "quadrature",
+    "Smolyak",
+    "Clenshaw-Curtis",
+    "Chebyshev",
+    "hierarchical surplus",
+    "high-dimensional approximation",
+    "Fortran",
+    "f2py",
+    "scientific computing",
+    "numerical methods",
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -50,12 +62,12 @@ dependencies = [
 requires-python = ">=3.10"
 
 [project.urls]
-homepage = "https://eggzec.github.io/<Project Name>/"
-documentation = "https://eggzec.github.io/<Project Name>/"
-source = "https://github.com/eggzec/<Project Name>"
-changelog = "https://eggzec.github.io/<Project Name>/changelog/"
-releasenotes = "https://github.com/eggzec/<Project Name>/releases/latest"
-issues = "https://github.com/eggzec/<Project Name>/issues"
+homepage = "https://eggzec.github.io/spinterp/"
+documentation = "https://eggzec.github.io/spinterp/"
+source = "https://github.com/eggzec/spinterp"
+changelog = "https://eggzec.github.io/spinterp/changelog/"
+releasenotes = "https://github.com/eggzec/spinterp/releases/latest"
+issues = "https://github.com/eggzec/spinterp/issues"
 
 [dependency-groups]
 dev = [
@@ -79,7 +91,7 @@ test = [
 source = "vcs"
 
 [tool.hatch.build.targets.wheel]
-include = [ "/<Project Name>" ]
+include = [ "/spinterp" ]
 
 [tool.ruff]
 line-length = 80
