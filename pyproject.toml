@@ -65,7 +65,7 @@ requires-python = ">=3.10"
 homepage = "https://eggzec.github.io/spinterp/"
 documentation = "https://eggzec.github.io/spinterp/"
 source = "https://github.com/eggzec/spinterp"
-changelog = "https://eggzec.github.io/spinterp/changelog/"
+# changelog = "https://eggzec.github.io/spinterp/changelog/"
 releasenotes = "https://github.com/eggzec/spinterp/releases/latest"
 issues = "https://github.com/eggzec/spinterp/issues"
 
