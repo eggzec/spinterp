@@ -27,13 +27,13 @@ Sparse Grid Interpolation Toolbox for Python.
 
 ## Routines
 
-| Fortran subroutine | Python binding  | Description                                    |
-|--------------------|-----------------|------------------------------------------------|
-| `SPVALS`           | `spvals`        | Compute hierarchical surpluses                 |
-| `SPINTERP`         | `spinterp`      | Evaluate interpolant (and gradient) at points  |
-| `SPQUAD`           | `spquad`        | Integrate interpolant over domain              |
-| `SPGRID`           | `spgrid`        | Return sparse grid node coordinates            |
-| `SPGETSEQ`         | `spgetseq`      | Generate multi-index level sequences           |
+| Python binding  | Description                                    |
+|-----------------|------------------------------------------------|
+| `spvals`        | Compute hierarchical surpluses                 |
+| `spinterp`      | Evaluate interpolant (and gradient) at points  |
+| `spquad`        | Integrate interpolant over domain              |
+| `spgrid`        | Return sparse grid node coordinates            |
+| `spgetseq`      | Generate multi-index level sequences           |
 
 ## Quick example
 
@@ -68,7 +68,6 @@ Requires gfortran, Meson, and f2py (`numpy`).
 - [Theory](https://eggzec.github.io/spinterp/theory/) — hierarchical basis, Smolyak construction, algorithms
 - [Quickstart](https://eggzec.github.io/spinterp/quickstart/) — runnable examples
 - [API Reference](https://eggzec.github.io/spinterp/api/) — function signatures and arguments
-- [References](https://eggzec.github.io/spinterp/references/) — literature citations
 
 ## License
 
