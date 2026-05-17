@@ -12,11 +12,42 @@ Call `spderiv_cc` (or `spderiv_cb` for the Chebyshev grid) instead of `spinterp_
 function returns both the interpolated values **and** the full gradient vector:
 
 ```python
+import numpy as np
 import spinterp
+
+d = 2
+
+def f(x, y):
+    return np.sin(x) + np.cos(y)
+
+# Build hierarchical surpluses (Clenshaw-Curtis grid)
+all_seq, all_surp = [], []
+for k in range(5):
+    nl  = spinterp.spnlevels(k, d)
+    seq = spinterp.spgetseq(k, d, nl)
+    tp  = spinterp.spdim_cc(seq)
+    x_k = spinterp.spgrid_cc(seq, tp)
+    fvals = np.array([f(*x_k[i]) for i in range(tp)])
+    if k == 0:
+        surp_k = fvals.copy()
+    else:
+        z_prev   = np.concatenate(all_surp)
+        seq_prev = np.vstack(all_seq)
+        surp_k   = fvals - spinterp.spcmpvals_cc(z_prev, x_k, seq, seq_prev)
+    all_seq.append(seq)
+    all_surp.append(surp_k)
+
+z   = np.concatenate(all_surp)
+seq = np.vstack(all_seq)
+
+pts_unit = np.array([[0.25, 0.4], [0.6, 0.75], [0.1, 0.9]])
 
 # ip.shape  = (npoints,)
 # grad.shape = (npoints, d)
 ip, grad = spinterp.spderiv_cc(z, pts_unit, seq)
+print("Values:  ", ip)
+print("df/dx1:  ", grad[:, 0])
+print("df/dx2:  ", grad[:, 1])
 ```
 
 The procedure for building the surpluses `z` and level-index matrix `seq` is identical
@@ -83,17 +114,50 @@ where $\Delta$ is the cell width $1/2^{\ell_{\max}}$.
 Use `spcont_deriv_cc` followed by `pp_deriv` to obtain continuous derivatives:
 
 ```python
-maxlev = int(seq[:, 0].max())
-ip, ipder, ipder2 = spinterp.spcont_deriv_cc(z, pts_unit, seq, maxlev)
-# pp_deriv post-processes ipder in-place using ipder2
 import numpy as np
+import spinterp
+
+d = 2
+
+def f(x, y):
+    return np.sin(x) + np.cos(y)
+
+# Build hierarchical surpluses (Clenshaw-Curtis grid)
+all_seq, all_surp = [], []
+for k in range(5):
+    nl  = spinterp.spnlevels(k, d)
+    seq = spinterp.spgetseq(k, d, nl)
+    tp  = spinterp.spdim_cc(seq)
+    x_k = spinterp.spgrid_cc(seq, tp)
+    fvals = np.array([f(*x_k[i]) for i in range(tp)])
+    if k == 0:
+        surp_k = fvals.copy()
+    else:
+        z_prev   = np.concatenate(all_surp)
+        seq_prev = np.vstack(all_seq)
+        surp_k   = fvals - spinterp.spcmpvals_cc(z_prev, x_k, seq, seq_prev)
+    all_seq.append(seq)
+    all_surp.append(surp_k)
+
+z   = np.concatenate(all_surp)
+seq = np.vstack(all_seq)
+
+pts_unit  = np.array([[0.25, 0.4], [0.6, 0.75], [0.1, 0.9]])
+maxlev    = int(seq.max())
 maxlevvec = np.full(d, maxlev, dtype=np.int32)
+
+ip, ipder, ipder2 = spinterp.spcont_deriv_cc(z, pts_unit, seq, maxlev)
+
+# pp_deriv post-processes ipder in-place using ipder2
 spinterp.pp_deriv(
     np.asfortranarray(ipder),
     np.asfortranarray(ipder2),
     maxlevvec,
-    np.asfortranarray(pts_unit)
+    np.asfortranarray(pts_unit),
 )
+print("Values:   ", ip)
+print("df/dx1:   ", ipder[:, 0])
+print("df/dx2:   ", ipder[:, 1])
 ```
 
 The figure below shows the same derivative after the continuity post-processing:
@@ -109,7 +173,41 @@ The derivatives are computed via the **discrete cosine transform (DCT)**, using 
 `spderiv_cb` function:
 
 ```python
+import numpy as np
+import spinterp
+
+d = 2
+
+def f(x, y):
+    return np.sin(x) + np.cos(y)
+
+# Build hierarchical surpluses (Chebyshev grid)
+# CB uses the same point count as CC
+all_seq, all_surp = [], []
+for k in range(5):
+    nl  = spinterp.spnlevels(k, d)
+    seq = spinterp.spgetseq(k, d, nl)
+    tp  = spinterp.spdim_cc(seq)
+    x_k = spinterp.spgrid_cb(seq, tp)
+    fvals = np.array([f(*x_k[i]) for i in range(tp)])
+    if k == 0:
+        surp_k = fvals.copy()
+    else:
+        z_prev   = np.concatenate(all_surp)
+        seq_prev = np.vstack(all_seq)
+        surp_k   = fvals - spinterp.spcmpvals_cb(z_prev, x_k, seq, seq_prev)
+    all_seq.append(seq)
+    all_surp.append(surp_k)
+
+z_cb = np.concatenate(all_surp)
+seq  = np.vstack(all_seq)
+
+pts_unit = np.array([[0.25, 0.4], [0.6, 0.75], [0.1, 0.9]])
+
 ip, grad = spinterp.spderiv_cb(z_cb, pts_unit, seq)
+print("Values:  ", ip)
+print("df/dx1:  ", grad[:, 0])
+print("df/dx2:  ", grad[:, 1])
 ```
 
 The resulting derivatives are infinitely smooth:

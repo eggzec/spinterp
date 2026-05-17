@@ -30,9 +30,6 @@ keywords = [
     "Chebyshev",
     "hierarchical surplus",
     "high-dimensional approximation",
-    "Fortran",
-    "f2py",
-    "scientific computing",
     "numerical methods",
 ]
 classifiers = [

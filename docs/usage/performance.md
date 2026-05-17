@@ -50,7 +50,11 @@ The recommended pattern is to build the interpolant in a loop, checking the esti
 after each level:
 
 ```python
-import numpy as np, spinterp
+import numpy as np
+import spinterp
+
+def f_vec(x1, x2):
+    return (x1 * x2) ** 2
 
 d, n_max = 2, 8
 all_seq, all_surp = [], []
@@ -103,14 +107,44 @@ A simple Python equivalent: keep only subgrids where $|\alpha_{\mathbf{l}}|_\inf
 a threshold:
 
 ```python
+import numpy as np
+import spinterp
+
+d         = 2
+max_level = 6
+
+def f(x, y):
+    return np.sin(x) + np.cos(y)
+
+# Build hierarchical surpluses (Clenshaw-Curtis grid)
+all_seq, all_surp = [], []
+for k in range(max_level + 1):
+    nl  = spinterp.spnlevels(k, d)
+    seq = spinterp.spgetseq(k, d, nl)
+    tp  = spinterp.spdim_cc(seq)
+    x_k = spinterp.spgrid_cc(seq, tp)
+    fvals = np.array([f(*x_k[i]) for i in range(tp)])
+    if k == 0:
+        surp_k = fvals.copy()
+    else:
+        z_prev   = np.concatenate(all_surp)
+        seq_prev = np.vstack(all_seq)
+        surp_k   = fvals - spinterp.spcmpvals_cc(z_prev, x_k, seq, seq_prev)
+    all_seq.append(seq)
+    all_surp.append(surp_k)
+
+# Purge subgrids whose surpluses are all below the drop tolerance
 drop_tol = 1e-5
 keep = [
-    (seq, surp)
-    for seq, surp in zip(all_seq, all_surp)
+    (s, surp)
+    for s, surp in zip(all_seq, all_surp)
     if np.max(np.abs(surp)) > drop_tol
 ]
-seq_pruned = np.vstack([s for s, _ in keep])
+seq_pruned = np.vstack([s    for s, _    in keep])
 z_pruned   = np.concatenate([surp for _, surp in keep])
+
+print(f"Original subgrids: {len(all_seq)},  after purge: {len(keep)}")
+print(f"Original surpluses: {sum(len(s) for s in all_surp)},  after purge: {len(z_pruned)}")
 ```
 
 The trade-off: smaller `drop_tol` → higher accuracy, slower evaluation.  Typical savings
@@ -128,11 +162,45 @@ all query points as a single 2-D array is far more efficient than one-point-at-a
 calls.
 
 ```python
+import numpy as np
+import spinterp
+
+d         = 2
+max_level = 4
+
+def f(x, y):
+    return np.sin(x) + np.cos(y)
+
+# Build hierarchical surpluses (Clenshaw-Curtis grid)
+all_seq, all_surp = [], []
+for k in range(max_level + 1):
+    nl  = spinterp.spnlevels(k, d)
+    seq = spinterp.spgetseq(k, d, nl)
+    tp  = spinterp.spdim_cc(seq)
+    x_k = spinterp.spgrid_cc(seq, tp)
+    fvals = np.array([f(*x_k[i]) for i in range(tp)])
+    if k == 0:
+        surp_k = fvals.copy()
+    else:
+        z_prev   = np.concatenate(all_surp)
+        seq_prev = np.vstack(all_seq)
+        surp_k   = fvals - spinterp.spcmpvals_cc(z_prev, x_k, seq, seq_prev)
+    all_seq.append(seq)
+    all_surp.append(surp_k)
+
+z   = np.concatenate(all_surp)
+seq = np.vstack(all_seq)
+
+rng = np.random.default_rng(0)
+pts = rng.random((1000, d))
+
 # Slow — Python loop over 1000 points
-results = [spinterp.spinterp_cc(z, pts[i:i+1], seq)[0] for i in range(1000)]
+results_slow = [spinterp.spinterp_cc(z, pts[i:i+1], seq)[0] for i in range(1000)]
 
 # Fast — single batched call
-results = spinterp.spinterp_cc(z, pts, seq)   # pts.shape = (1000, d)
+results_fast = spinterp.spinterp_cc(z, pts, seq)   # pts.shape = (1000, d)
+
+print(f"Max diff slow vs fast: {np.max(np.abs(np.array(results_slow) - results_fast)):.2e}")
 ```
 
 Typical speed-up: **50–100×** for 1000 points, due to reduced Python overhead and better
