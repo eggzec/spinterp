@@ -2,7 +2,7 @@ site_name: spinterp
 site_description: Sparse Grid Interpolation Toolbox for Python
 site_url: https://eggzec.github.io/spinterp/
 docs_dir: docs
-site_dir: build/docs
+site_dir: site
 
 repo_name: eggzec/spinterp
 repo_url: https://github.com/eggzec/spinterp
