@@ -67,7 +67,7 @@ Requires gfortran, Meson, and f2py (`numpy`).
 
 - [Theory](https://eggzec.github.io/spinterp/theory/) — hierarchical basis, Smolyak construction, algorithms
 - [Quickstart](https://eggzec.github.io/spinterp/quickstart/) — runnable examples
-- [API Reference](https://eggzec.github.io/spinterp/api/) — function signatures and arguments
+- [API Reference](https://eggzec.github.io/spinterp/usage/) — function signatures and arguments
 
 ## License
 

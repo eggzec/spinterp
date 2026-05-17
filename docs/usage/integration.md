@@ -16,13 +16,46 @@ where $\mathbf{w}$ is the vector of quadrature weights and $\mathbf{z}$ is the f
 surplus array.
 
 ```python
-import spinterp, numpy as np
+import numpy as np
+import spinterp
+
+d         = 2
+max_level = 5
+
+def f(x, y):
+    return np.sin(x) + np.cos(y)
+
+# Build hierarchical surpluses (Clenshaw-Curtis grid)
+all_seq, all_surp = [], []
+for k in range(max_level + 1):
+    nl  = spinterp.spnlevels(k, d)
+    seq = spinterp.spgetseq(k, d, nl)
+    tp  = spinterp.spdim_cc(seq)
+    x_k = spinterp.spgrid_cc(seq, tp)
+    fvals = np.array([f(*x_k[i]) for i in range(tp)])
+    if k == 0:
+        surp_k = fvals.copy()
+    else:
+        z_prev   = np.concatenate(all_surp)
+        seq_prev = np.vstack(all_seq)
+        surp_k   = fvals - spinterp.spcmpvals_cc(z_prev, x_k, seq, seq_prev)
+    all_seq.append(seq)
+    all_surp.append(surp_k)
+
+z   = np.concatenate(all_surp)
+seq = np.vstack(all_seq)
 
 # Build quadrature weights for the CC grid
-# (seq and z come from the standard surplus construction)
-tp_all = sum(spinterp.spdim_cc(s) for s in all_seq)
-w = spinterp.spquadw_cc(seq, tp_all)
+# tp_all must match the total size of the combined seq / z
+tp_all   = sum(spinterp.spdim_cc(s) for s in all_seq)
+w        = spinterp.spquadw_cc(seq, tp_all)
 integral = float(np.dot(w, z))
+
+# Exact: ∫∫ [sin(x)+cos(y)] dx dy over [0,1]^2 = (1-cos(1)) + sin(1)
+exact = (1 - np.cos(1)) + np.sin(1)
+print(f"Approximate: {integral:.10f}")
+print(f"Exact:       {exact:.10f}")
+print(f"Error:       {abs(integral - exact):.3e}")
 ```
 
 ---
