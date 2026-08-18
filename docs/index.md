@@ -1,3 +1,5 @@
+![spinterp](assets/spinterp-banner.png)
+
 # spinterp
 
 **Sparse Grid Interpolation Toolbox**
