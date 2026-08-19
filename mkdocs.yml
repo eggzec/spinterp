@@ -14,6 +14,8 @@ copyright: "Copyright &copy; 2026 eggzec. All Rights Reserved."
 # ---------------------------------------------------------------------------
 theme:
   name: material
+  logo: assets/spinterp-icon.svg
+  favicon: assets/spinterp-icon.png
   language: en
 
   features:

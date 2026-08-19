@@ -1,4 +1,4 @@
-![spinterp](assets/spinterp-banner.png)
+![spinterp](https://raw.githubusercontent.com/eggzec/spinterp/master/docs/assets/spinterp-banner.png)
 
 # spinterp
 
